@@ -5,10 +5,13 @@
   "directories": {
     "test": "jest"
   },
+  "homepage": "https://irfanft12.github.io/top-battleship",
   "scripts": {
     "test": "jest",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +22,7 @@
     "@babel/preset-env": "^7.28.5",
     "babel-jest": "^30.2.0",
     "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.5",
     "jest": "^30.2.0",
     "style-loader": "^4.0.0",
