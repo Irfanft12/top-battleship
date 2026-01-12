@@ -1,0 +1,91 @@
+import ship from "./ship.js";
+function gameboard() {
+    const areArraysEqual = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    let shipsWithPositions = [];
+    const placeShip = (coordinates, length, axis = "x") => {
+        const myShip = ship(length);
+        let allCoordinates = [];
+        for (let i = 0; i < length; i++) {
+            if (axis === "x") {
+                allCoordinates.push(
+                    [coordinates[0] + i, coordinates[1]]
+                )
+            } else if (axis === "y") {
+                allCoordinates.push(
+                    [coordinates[0], coordinates[1] + i]
+                )
+            }
+        }
+        for (let coordinate of allCoordinates) {
+            if (
+                coordinate[0] < 0 ||
+                coordinate[0] >= 10 ||
+                coordinate[1] < 0 ||
+                coordinate[1] >= 10
+            ) return false;
+
+            for (let ship of shipsWithPositions) {
+                for (let otherShipCoordinate of ship.shipCoordinates) {
+                    if (areArraysEqual(coordinate, otherShipCoordinate)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        const newShipEntry = {
+            myShip,
+            shipLength: myShip.shipLength,
+            shipCoordinates: allCoordinates
+        };
+        shipsWithPositions.push(newShipEntry);
+        return true;
+    }
+    let missingShots = [];
+    let successfulShots = [];
+    const receiveAttack = (attackCoordinates) => {
+        for (let ship of shipsWithPositions) {
+            for (let coordinate of ship.shipCoordinates) {
+                if (areArraysEqual(coordinate, attackCoordinates)) {
+                    ship.myShip.hit();
+                    successfulShots.push(attackCoordinates);
+                    return true;
+                }
+            }
+        }
+        missingShots.push(attackCoordinates);
+        return false;
+    }
+
+    const allShipsSunk = () => {
+        for (let ship of shipsWithPositions) {
+            if (!ship.myShip.isSunk()) {
+                return false
+            }
+        }
+        return true;
+    }
+
+    return {
+        placeShip,
+        receiveAttack,
+        shipsWithPositions,
+        successfulShots,
+        missingShots,
+        allShipsSunk,
+        areArraysEqual
+    }
+
+}
+
+export default gameboard;

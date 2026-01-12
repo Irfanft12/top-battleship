@@ -1,0 +1,72 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+main {
+    max-width: 1000px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+    align-items: center;
+    padding-top: 50px;
+    
+
+    #ship-harbour {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        
+
+        #fleet {
+            display: flex;
+            gap: 10px;
+
+            button {
+                padding: 10px;
+                background-color: lightgray;
+                border: none;
+                cursor: pointer;
+            }
+
+        }
+        #rotate-btn {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #74e7dc;
+            border: none;
+        }
+
+    }
+
+    .boards {
+        display: flex;
+        gap: 20px;
+    }
+
+    #human-board,
+    #computer-board {
+        display: grid;
+        grid-template-columns: repeat(10, 40px);
+        grid-template-rows: repeat(10, 40px);
+
+        .cell {
+            background-color: lightblue;
+            border: 1px solid rgb(128, 149, 158);
+        }
+
+        .cell.ship {
+            background-color: #cccccc;
+        }
+        .cell.miss {
+            background-color: rgb(124, 243, 154);
+        }
+        .cell.hit {
+            background-color: rgb(245, 76, 76);
+        }
+    }
+}
